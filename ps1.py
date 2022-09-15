@@ -15,7 +15,7 @@ def example(data: bytes) -> bytes:
     'ПРИВІТ'
     """
     return data.decode("utf-8").upper().encode("utf-8")
-
+    
 
 def problem1(n: int) -> typing.List[int]:
     """
