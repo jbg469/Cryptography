@@ -29,12 +29,11 @@ def problem1(n: int) -> typing.List[int]:
     > problem1(5)
     [140, 7, 218, 46, 104]
     """
-    foobar=typing.List[n]
+    foobar=[]
+    i=0
     for i in range (n) :
-        foobar [i] = secrets.randbelow(256)
+        foobar.append(secrets.randbelow(256))
     return foobar
-
-
 
 def problem2(n: int) -> bytes:
     """
