@@ -1,5 +1,6 @@
 import typing
 import secrets
+import functools
 
 
 
@@ -80,8 +81,8 @@ def problem4(data: typing.List[bytes]) -> bytes:
     ...     b'hello',
     ... ])
     b'world'
-    """
-
+    """   
+    return bytes(functools.reduce(lambda a, b: a ^ b, i) for i in zip(*args)) # copied from resources
 
 def problem5(data: str) -> bytes:
     """
