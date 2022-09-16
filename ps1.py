@@ -91,6 +91,7 @@ def problem5(data: str) -> bytes:
     >>> problem5('d0cad8d8de')
     b'\xd0\xca\xd8\xd8\xde'
     """
+    return bytes.fromhex(data)
 
 
 def problem6(data: bytes) -> str:
@@ -100,3 +101,4 @@ def problem6(data: bytes) -> str:
     >>> problem6(b'hello')
     '68656c6c6f'
     """
+    return data.hex()
