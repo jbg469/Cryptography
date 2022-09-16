@@ -1,7 +1,6 @@
 import typing
 import secrets
 
-
 def example(data: bytes) -> bytes:
     """
     Convert utf-8 encoded bytes to uppercase and return modified utf-8 encoded bytes
@@ -32,8 +31,8 @@ def problem1(n: int) -> typing.List[int]:
     foobar=[]
     i=0
     for i in range (n) :
-        foobar.append(secrets.randbelow(256))
-    return foobar
+        foobar.append(secrets.randbelow(256)) #copied from resources
+    return (foobar)
 
 def problem2(n: int) -> bytes:
     """
@@ -46,6 +45,7 @@ def problem2(n: int) -> bytes:
     > problem2(5)
     b'\x18s\x0b8B'
     """
+    return secrets.token_bytes(n)
 
 
 def problem3(data: bytes) -> bytes:
