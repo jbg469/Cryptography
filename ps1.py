@@ -1,6 +1,8 @@
 import typing
 import secrets
 
+
+
 def example(data: bytes) -> bytes:
     """
     Convert utf-8 encoded bytes to uppercase and return modified utf-8 encoded bytes
@@ -45,7 +47,7 @@ def problem2(n: int) -> bytes:
     > problem2(5)
     b'\x18s\x0b8B'
     """
-    return secrets.token_bytes(n)
+    return secrets.token_bytes(n) # got from resources
 
 
 def problem3(data: bytes) -> bytes:
@@ -60,6 +62,10 @@ def problem3(data: bytes) -> bytes:
     >>> problem3(b'hello')
     b'\xd0\xca\xd8\xd8\xde'
     """
+    datlist = list(data)
+    for i in range (len(datlist)):
+        datlist[i] = (datlist[i] * 2) % 256
+    return (bytes(datlist)) #copied from resources
 
 
 def problem4(data: typing.List[bytes]) -> bytes:
