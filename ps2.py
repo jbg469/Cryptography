@@ -1,6 +1,5 @@
 import typing
-
-
+import secrets
 def problem1(b: int, e: int) -> int:
     """
     Return base `b` raised to the exponent `e`
@@ -33,11 +32,9 @@ class DHKeyPair(typing.TypedDict):
     >>> DHKeyPair({'a': 1, 'A': 2})
     {'a': 1, 'A': 2}
     """
-
     A: int
     a: int
-
-
+    
 def problem3(g: int, p: int) -> DHKeyPair:
     """
     Given a generator `g` and prime modulus `p`, return a valid Diffie-Hellman
@@ -53,7 +50,9 @@ def problem3(g: int, p: int) -> DHKeyPair:
     > problem3(7, 17)
     {'a': 12, 'A': 13}
     """
-
+    a = secrets.randbelow(p)
+    pair : DHKeyPair = {'a': a, 'A': problem2(g,a,p) }
+    return pair
 
 def problem4(g: int, p: int, a: int, A: int) -> bool:
     """
