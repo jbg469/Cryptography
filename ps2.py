@@ -104,9 +104,7 @@ class DHNegotiatedSecret(typing.TypedDict):
     A: int
 
 
-def problem5(
-    g: int, p: int, B: int, b: typing.Optional[int] = None
-) -> DHNegotiatedSecret:
+def problem5( g: int, p: int, B: int, b: typing.Optional[int] = None) -> DHNegotiatedSecret:
     """
     Given a generator `g`, prime modulus `p`, and Bob's public key `B`, first
     compute a valid Diffie-Hellman keypair for Alice consisting of public key
@@ -128,3 +126,18 @@ def problem5(
     > problem5(5, 17, 9)
     {'A': 10, 's': 2}
     """
+    pairAlice: DHKeyPair = problem3(g,p)
+    a=pairAlice.get('a')
+    A=pairAlice.get('A')
+    flag = False;
+    if (problem4(g,p,a,A) == False):
+        while (flag == False):
+            pairAlice = problem3(g,p)
+            a=pairAlice.get('a')
+            A=pairAlice.get('A')
+            flag = problem4(g,p,a,A)
+    s = problem2(B,a,p)
+    negotiatedPair: DHNegotiatedSecret = {'s' : s, 'A' : A}
+    return negotiatedPair
+
+    
