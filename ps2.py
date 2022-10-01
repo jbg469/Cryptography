@@ -78,6 +78,18 @@ def problem4(g: int, p: int, a: int, A: int) -> bool:
     >>> problem4(7, 17, 12, 13)
     True
     """
+    if a < 1:
+        return False
+    if g > p:
+        return False
+    if not g < a or not a < p:
+        return False
+    if A < p:
+        return False
+    if A != problem2(g,a,p):
+        return False
+    return True
+    
 
 
 class DHNegotiatedSecret(typing.TypedDict):
