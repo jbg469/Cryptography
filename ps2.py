@@ -80,11 +80,9 @@ def problem4(g: int, p: int, a: int, A: int) -> bool:
     """
     if a < 1:
         return False
-    elif g > p:
-        return False
     elif not (A < p):
         return False
-    elif not (g<a) and not (a<p):
+    elif not (g<a) or not (a<p): #g<a<p
         return False
     elif problem2(g,a,p) != A:
         return False
