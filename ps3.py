@@ -1,5 +1,10 @@
+
+
 import typing
 import hashlib
+import requests
+import hmac
+import sha256
 
 
 def problem1(data: bytes) -> bytes:
@@ -9,7 +14,8 @@ def problem1(data: bytes) -> bytes:
     >>> problem1(b'hello').hex()
     'aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d'
     """
-    return hashlib.sha1(data).hexdigest()
+    return hashlib.sha1(data).digest()
+
 
 
 
@@ -20,6 +26,8 @@ def problem2(data: bytes) -> bytes:
     >>> problem2(b'hello').hex()
     '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824'
     """
+    return hashlib.sha256(data).digest()
+
 
 
 class SHAttered(typing.TypedDict):
@@ -56,7 +64,31 @@ def problem3() -> SHAttered:
     >>> hashes['blue_pdf_sha256'] == hashes['red_pdf_sha256']
     False
     """
+    #Reference: https://stackoverflow.com/questions/73558921/download-pdf-as-file-object-without-downloading-the-file-with-chrome-and-seleniu
+    
+ 
+    r= requests.get("https://shattered.io/static/shattered-1.pdf")
+    file = r.content 
+    file1_256hash = hashlib.sha256()
+    file1_SHA1= hashlib.sha1()
+    for i in r.iter_content():
+            file1_256hash.update(i)
+            file1_SHA1.update(i)
+    r= requests.get("https://shattered.io/static/shattered-2.pdf")
+    file = r.content 
+    file2_256hash = hashlib.sha256()
+    file2_SHA1= hashlib.sha1()
+    for i in r.iter_content():
+            file2_256hash.update(i)
+            file2_SHA1.update(i)
+   
 
+    shattered : SHAttered = {'blue_pdf_sha1': file1_SHA1.digest(), 
+    'blue_pdf_sha256':file1_256hash.digest(), 
+    'red_pdf_sha1':file2_SHA1.digest(), 
+    'red_pdf_sha256':file2_256hash.digest()}
+
+    return shattered
 
 def sha256_padding(length: int) -> bytes:
     """
@@ -199,6 +231,11 @@ def problem4(length: int, hash: bytes, suffix: bytes) -> bytes:
     >>> reference_hash == extended_hash
     True
     """
+    h = sha256.sha256()
+    padding = sha256_padding(length)
+    h.state = (hash, length + len(padding))
+    h.update(suffix)
+    return h.digest()
 
 
 def problem5(key: bytes, data: bytes) -> bytes:
@@ -208,3 +245,10 @@ def problem5(key: bytes, data: bytes) -> bytes:
     >>> problem5(b'secret', b'data').hex()
     '1b2c16b75bd2a870c114153ccda5bcfca63314bc722fa160d690de133ccbb9db'
     """
+    # as shown in lecture
+    value = hmac.HMAC(key=key, digestmod='sha256')
+    value.update(data)
+    
+
+    return value.digest()  
+
